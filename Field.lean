@@ -36,7 +36,10 @@ lemma neg_add_self (a : F) : -a + a = 0 :=
 
 -- do the same for multiplication
 lemma one_mul (a : F) : 1 * a = a :=
-  sorry
+  calc
+
+
+sorry
 
 -- do the same for multiplication
 -- here `ha` is a *proof* that `a ≠ 0`, which we will need to use at some point
@@ -63,7 +66,10 @@ lemma neg_unique (a b : F) (h : a + b = 0) : b = -a :=
   sorry
 
 lemma one_unique (n : F) (h : ∀ a, a * n = a) : n = 1 :=
-  sorry
+  calc = 1 * n := by exact?
+
+
+sorry
 
 lemma inv_unique (a b : F) (ha : a ≠ 0) (h : a * b = 1) : b = a⁻¹ :=
   sorry
