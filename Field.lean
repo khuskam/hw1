@@ -70,7 +70,8 @@ lemma zero_unique (z : F) (h : ∀ a, a + z = a) : z = 0 :=
 -- see how it appears in our *local context*
 lemma neg_unique (a b : F) (h : a + b = 0) : b = -a :=
 calc
-a + b = 
+a + b -a = 0 - a := by rw [add_neg_self]
+         = -a    := by rw h
   sorry
 
 lemma one_unique (n : F) (h : ∀ a, a * n = a) : n = 1 :=
@@ -80,9 +81,8 @@ _ = 1 := by h
 sorry
 
 lemma inv_unique (a b : F) (ha : a ≠ 0) (h : a * b = 1) : b = a⁻¹ :=
-  calc
-
-
+calc
+b = a^-1 := by rw h
 sorry
 
 lemma zero_mul (a : F) : 0 * a = 0 := by
@@ -100,11 +100,14 @@ lemma zero_mul (a : F) : 0 * a = 0 := by
 -- don't do a lot of work here! And don't just copy-and-paste!
 lemma mul_zero (a : F) : a * 0 = 0 :=
 calc
-0 * a = (0 + 0) * a := 
-_  = (0 * a) + (0 * a) :=
-(0 * a) - (0 * a) = -(0 * a) + (0 * a) + (0 * a) :=
-0 = 0 + 0 * a :=
-_ = 0 * a
+ 0 * a + a =  0 * a + 1 * a := by rw [one_mul]
+      _         = (1 + 0) * a   := by rw [right_distrib]
+      _         = a             := by rw [add_zero, one_mul]
+  calc
+    a * 0 = 0 * a + (-a + a)  := by rw [neg_add_self, zero_add]
+    _     = (a + 0 * a) + -a := by rw [add_assoc]
+    _     =  a + -a          := by rw [h]
+    _     = 0                 := by rw [neg_add_self]
   
   sorry
 
