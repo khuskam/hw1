@@ -37,7 +37,8 @@ lemma neg_add_self (a : F) : -a + a = 0 :=
 -- do the same for multiplication
 lemma one_mul (a : F) : 1 * a = a :=
   calc
-
+1 * a = a * 1 := by rw [one_mul]
+_ = a by .sym
 
 sorry
 
@@ -49,7 +50,12 @@ lemma inv_mul {a : F} (ha : a ≠ 0) : a⁻¹ * a = 1 :=
     _       = 1       := by rw [mul_inv ha]
 
 lemma right_distrib (a b c : F) : (a + b) * c = a * c + b * c :=
-  sorry
+  calc
+(a + b) * c = c * (a+b) := by rw [mul_comm]
+_           = c * a + c * b := by rw [left_distrib]
+_           = a * c + b * c := by rw [mul_comm]
+
+sorry
 
 -- something that behaves like `0` must *be* `0`.
 -- note that `h` is a *proof* that `∀ a : F, a + z = a`, which we can *use*
@@ -63,16 +69,21 @@ lemma zero_unique (z : F) (h : ∀ a, a + z = a) : z = 0 :=
 -- note that `h` is a *proof* that `a + b = 0`, which we can *use*
 -- see how it appears in our *local context*
 lemma neg_unique (a b : F) (h : a + b = 0) : b = -a :=
+calc
+a + b = 
   sorry
 
 lemma one_unique (n : F) (h : ∀ a, a * n = a) : n = 1 :=
-  calc = 1 * n := by exact?
-
-
+  calc 
+1 * n := by rw [one_mul]
+_ = 1 := by h
 sorry
 
 lemma inv_unique (a b : F) (ha : a ≠ 0) (h : a * b = 1) : b = a⁻¹ :=
-  sorry
+  calc
+
+
+sorry
 
 lemma zero_mul (a : F) : 0 * a = 0 := by
   have h : a + 0 * a = a :=
@@ -88,6 +99,13 @@ lemma zero_mul (a : F) : 0 * a = 0 := by
 
 -- don't do a lot of work here! And don't just copy-and-paste!
 lemma mul_zero (a : F) : a * 0 = 0 :=
+calc
+0 * a = (0 + 0) * a := 
+_  = (0 * a) + (0 * a) :=
+(0 * a) - (0 * a) = -(0 * a) + (0 * a) + (0 * a) :=
+0 = 0 + 0 * a :=
+_ = 0 * a
+  
   sorry
 
 -- what tools do we have for showing something is equal to `-a`? Only `neg_unique`!
